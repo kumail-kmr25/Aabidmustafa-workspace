@@ -77,7 +77,7 @@ npm run dev
 ---
 
 ## 📜 Professional Vision
-Developed by **Antigravity AI** in collaboration with **Mustafa Aabid**, this portal serves as a beacon of digital transformation in education. It is not just a management system—it is a promise to provide every student in Jammu & Kashmir with the tools they need to succeed in a globalized world.
+Developed by **Kumail Kmr** in collaboration with **Mustafa Aabid**, this portal serves as a beacon of digital transformation in education. It is not just a management system—it is a promise to provide every student in Jammu & Kashmir with the tools they need to succeed in a globalized world.
 
 ---
 *Created with ❤️ for the Students by **Kumail Kmr**.*
