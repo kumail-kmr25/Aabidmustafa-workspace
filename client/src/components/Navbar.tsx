@@ -8,29 +8,39 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+            setIsScrolled(window.scrollY > 40);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     return (
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'glass border-b py-3' : 'bg-transparent py-5'}`}>
-            <div className="container mx-auto px-6 flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold text-primary dark:text-white">
-                    Mustafa Aabid
+        <nav className={`sticky top-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'glass border-b shadow-sm' : 'bg-white'}`}>
+            <div className="container mx-auto px-6 h-[70px] flex justify-between items-center">
+                <Link href="/" className="text-xl font-bold flex items-center space-x-2">
+                    <span className="text-2xl">📘</span>
+                    <span className="font-heading tracking-tighter">Mustafa Aabid</span>
                 </Link>
 
-                <div className="hidden md:flex space-x-8 items-center font-medium">
+                <div className="hidden lg:flex space-x-8 items-center font-medium">
+                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <Link href="#about" className="hover:text-primary transition-colors">About</Link>
-                    <Link href="#study-hub" className="hover:text-primary transition-colors">Study Hub</Link>
+                    <div className="relative group">
+                        <button className="flex items-center hover:text-primary transition-colors">
+                            Study Hub <span className="ml-1 text-[10px]">▼</span>
+                        </button>
+                        {/* Dropdown would go here */}
+                    </div>
+                    <Link href="#blog" className="hover:text-primary transition-colors">Blog</Link>
                     <Link href="#csc" className="hover:text-primary transition-colors">CSC Services</Link>
-                    <Link href="#contact" className="bg-primary text-white px-5 py-2 rounded-full hover:bg-blue-700 transition-all shadow-md">
-                        Contact Now
-                    </Link>
+                    <Link href="#contact" className="hover:text-primary transition-colors">Contact</Link>
                 </div>
 
-                <button className="md:hidden text-primary dark:text-white">
+                <Link href="#study-hub" className="hidden md:block bg-primary text-white px-6 py-2.5 rounded-md font-bold hover:bg-opacity-90 transition-all shadow-md text-sm">
+                    Explore Study Material
+                </Link>
+
+                <button className="lg:hidden text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
