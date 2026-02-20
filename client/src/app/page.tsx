@@ -21,7 +21,7 @@ export default function Home() {
                 <span className="text-slate-400">Serving the People.</span>
               </h1>
               <p className="text-xl md:text-2xl text-slate-500 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                Professional JKBOSE Mentorship for Classes 6–10 and Trusted CSC Services in Hanjiwera.
+                Professional **JKBOSE & CBSE** Mentorship for Classes 6–10 and Trusted CSC Services in Hanjiwera.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start pt-4">
                 <Link href="/dashboard/materials" className="bg-primary text-secondary px-10 py-5 rounded-[24px] font-black hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 flex items-center justify-center gap-3">
@@ -49,7 +49,7 @@ export default function Home() {
       <section id="study-hub" className="section-padding bg-white dark:bg-[#0F172A] transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">📘 Study Hub – Classes 6 to 10</h2>
+            <h2 className="text-4xl font-black text-slate-800 dark:text-slate-100 tracking-tighter mb-4">📘 Study Hub – JKBOSE & CBSE</h2>
             <p className="text-slate-500">Access targeted resources for every class level.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">

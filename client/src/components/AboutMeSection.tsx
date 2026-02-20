@@ -81,7 +81,7 @@ export default function AboutMeSection() {
                                 { label: "Role", value: "Govt Teacher", icon: <GraduationCap size={18} /> },
                                 { label: "Community", value: "CSC Founder", icon: <Briefcase size={18} /> },
                                 { label: "Mission", value: "Digital India", icon: <Globe size={18} /> },
-                                { label: "Expertise", value: "JKBOSE Prep", icon: <Award size={18} /> },
+                                { label: "Expertise", value: "JKBOSE & CBSE", icon: <Award size={18} /> },
                             ].map((item, i) => (
                                 <div key={i} className="flex items-center gap-4 bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
                                     <div className="w-10 h-10 bg-primary/5 dark:bg-blue-400/10 rounded-xl flex items-center justify-center text-primary dark:text-blue-400">
