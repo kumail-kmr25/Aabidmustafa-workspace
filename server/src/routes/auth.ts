@@ -2,11 +2,13 @@ import express, { Request, Response } from 'express';
 import User from '../models/User';
 import { generateToken } from '../utils/generateToken';
 
+import { protect, adminOnly } from '../middleware/auth';
+
 const router = express.Router();
 
-// @desc    Register a new student
+// @desc    Register a new student (Admin Only)
 // @route   POST /api/auth/register
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/register', protect, adminOnly, async (req: Request, res: Response) => {
     try {
         const { name, email, password, studentClass } = req.body;
 

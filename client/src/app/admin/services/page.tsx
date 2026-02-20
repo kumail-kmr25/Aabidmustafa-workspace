@@ -1,0 +1,161 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import {
+    Plus,
+    Search,
+    Edit,
+    Trash2,
+    CheckCircle,
+    XCircle,
+    Briefcase,
+    Globe,
+    ExternalLink,
+    LayoutGrid
+} from "lucide-react";
+import axios from 'axios';
+
+export default function AdminServiceManagement() {
+    const [services, setServices] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        fetchServices();
+    }, []);
+
+    const fetchServices = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const { data } = await axios.get('http://localhost:5000/api/services/admin', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setServices(data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching services:', error);
+            setLoading(false);
+        }
+    };
+
+    const toggleStatus = async (id: string, currentStatus: string) => {
+        const nextStatus = currentStatus === 'active' ? 'inactive' : 'active';
+        try {
+            const token = localStorage.getItem('token');
+            await axios.put(`http://localhost:5000/api/services/${id}`, { status: nextStatus }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            fetchServices();
+        } catch (error) {
+            console.error('Error toggling service status:', error);
+        }
+    };
+
+    const deleteService = async (id: string) => {
+        if (!window.confirm('Are you sure you want to remove this service?')) return;
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(`http://localhost:5000/api/services/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            fetchServices();
+        } catch (error) {
+            console.error('Error deleting service:', error);
+        }
+    };
+
+    const filteredServices = services.filter(service =>
+        service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        service.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white font-heading tracking-tight capitalize">Service Management</h1>
+                    <p className="text-slate-500 dark:text-slate-400 mt-1">Manage active CSC and community services</p>
+                </div>
+                <button className="bg-primary text-white px-8 py-4 rounded-2xl font-black shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                    <Plus size={20} /> Add New Service
+                </button>
+            </div>
+
+            {/* Filters */}
+            <div className="bg-white dark:bg-slate-800 p-6 rounded-[32px] shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row gap-4 items-center">
+                <div className="relative flex-1 w-full">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <input
+                        type="text"
+                        placeholder="Search by Name or Category..."
+                        className="w-full pl-12 pr-4 py-4 bg-slate-50 dark:bg-slate-900 rounded-2xl focus:outline-primary border-none text-sm font-semibold dark:text-slate-200"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </div>
+
+            {/* Service List */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {loading ? (
+                    Array(6).fill(0).map((_, i) => (
+                        <div key={i} className="h-64 bg-slate-100 dark:bg-slate-800 rounded-[32px] animate-pulse" />
+                    ))
+                ) : filteredServices.map((service) => (
+                    <div key={service._id} className="bg-white dark:bg-slate-800 p-8 rounded-[40px] border border-slate-100 dark:border-slate-700 group hover:shadow-2xl transition-all duration-500 relative flex flex-col">
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="w-16 h-16 bg-primary/5 dark:bg-blue-400/10 rounded-2xl flex items-center justify-center text-3xl shadow-inner">
+                                {service.icon || '🏢'}
+                            </div>
+                            <div className={`px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest ${service.status === 'active' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                                {service.status}
+                            </div>
+                        </div>
+
+                        <div className="space-y-3 flex-1">
+                            <h3 className="text-xl font-bold dark:text-white leading-tight tracking-tight">{service.name}</h3>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">{service.description}</p>
+
+                            <div className="flex items-center gap-4 text-xs font-bold text-slate-400 pt-4">
+                                <span className="flex items-center gap-1.5 uppercase tracking-wider"><LayoutGrid size={14} /> {service.category}</span>
+                                {service.link && (
+                                    <a href={service.link} target="_blank" className="flex items-center gap-1.5 text-primary hover:underline">
+                                        <ExternalLink size={14} /> Direct Portal
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="mt-8 pt-6 flex items-center justify-between border-t border-slate-50 dark:border-slate-700">
+                            <button
+                                onClick={() => toggleStatus(service._id, service.status)}
+                                className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors ${service.status === 'active' ? 'text-green-500' : 'text-slate-300'}`}
+                            >
+                                {service.status === 'active' ? <CheckCircle size={18} /> : <XCircle size={18} />}
+                                {service.status === 'active' ? 'Live' : 'Hidden'}
+                            </button>
+
+                            <div className="flex gap-2">
+                                <button className="p-3 bg-slate-50 dark:bg-slate-900 rounded-2xl text-slate-400 hover:text-primary transition-colors">
+                                    <Edit size={16} />
+                                </button>
+                                <button
+                                    onClick={() => deleteService(service._id)}
+                                    className="p-3 bg-slate-50 dark:bg-slate-900 rounded-2xl text-slate-400 hover:text-red-500 transition-colors"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {!loading && filteredServices.length === 0 && (
+                <div className="text-center py-20 bg-slate-50 dark:bg-slate-800/50 rounded-[48px] border-2 border-dashed border-slate-200 dark:border-slate-700">
+                    <p className="text-slate-400 font-bold">No services found matching your search.</p>
+                </div>
+            )}
+        </div>
+    );
+}

@@ -57,8 +57,8 @@ export default function LoginPage() {
                     </button>
                 </form>
 
-                <p className="text-center text-slate-500 text-sm">
-                    Don't have an account? <Link href="/auth/register" className="text-primary font-bold hover:underline">Register here</Link>
+                <p className="text-center text-slate-400 text-xs italic">
+                    Note: Registration is restricted to authorized students only.
                 </p>
             </div>
         </div>

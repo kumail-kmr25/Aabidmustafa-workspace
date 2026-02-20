@@ -20,6 +20,9 @@ export default function ManageStudentsPage() {
                     <h1 className="text-3xl font-black text-slate-900 font-heading tracking-tight capitalize">Student Management</h1>
                     <p className="text-slate-500 mt-1">Review student activity and manage access</p>
                 </div>
+                <button className="bg-primary text-white px-8 py-4 rounded-2xl font-black shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                    <UserCircle size={20} /> Register New Student
+                </button>
             </div>
 
             <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4 items-center">

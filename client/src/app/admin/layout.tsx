@@ -28,10 +28,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: "Dashboard", href: "/admin", icon: <LayoutDashboard size={20} /> },
         { name: "Study Materials", href: "/admin/materials", icon: <BookOpen size={20} /> },
         { name: "Test Series", href: "/admin/tests", icon: <FileText size={20} /> },
+        { name: "Blog Posts", href: "/admin/blog", icon: <MessageSquare size={20} /> },
+        { name: "CSC Services", href: "/admin/services", icon: <Globe size={20} /> },
         { name: "Students", href: "/admin/students", icon: <Users size={20} /> },
-        { name: "Announcements", href: "/admin/announcements", icon: <MessageSquare size={20} /> },
+        { name: "Announcements", href: "/admin/announcements", icon: <Settings size={20} /> },
         { name: "Reports", href: "/admin/reports", icon: <BarChart3 size={20} /> },
-        { name: "Settings", href: "/admin/settings", icon: <Settings size={20} /> },
     ];
 
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen);

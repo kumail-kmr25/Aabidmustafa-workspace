@@ -46,7 +46,7 @@ export default function Home() {
       <AboutMeSection />
 
       {/* 6. Study Hub Preview */}
-      <section id="study-hub" className="section-padding bg-white">
+      <section id="study-hub" className="section-padding bg-white dark:bg-[#0F172A] transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">📘 Study Hub – Classes 6 to 10</h2>
@@ -54,8 +54,8 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {["Class 6", "Class 7", "Class 8", "Class 9", "Class 10"].map((cls) => (
-              <div key={cls} className="bg-white border border-slate-100 p-8 rounded-2xl text-center card-hover border-b-4 border-b-primary shadow-sm hover:border-primary">
-                <span className="text-primary font-black text-2xl block mb-2">{cls}</span>
+              <div key={cls} className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-8 rounded-2xl text-center card-hover border-b-4 border-b-primary shadow-sm hover:border-primary">
+                <span className="text-primary dark:text-blue-400 font-black text-2xl block mb-2">{cls}</span>
                 <p className="text-xs text-slate-400 mb-6 uppercase tracking-wider font-bold">Core Subjects Available</p>
                 <button className="text-primary font-bold text-sm border-b-2 border-primary hover:text-accent hover:border-accent transition-all">
                   View Materials
@@ -67,9 +67,9 @@ export default function Home() {
       </section>
 
       {/* 7. Why Choose Us */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-secondary dark:bg-[#1E293B] transition-colors duration-300">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-16 text-primary underline decoration-white decoration-4 underline-offset-8">🌟 Why Choose Us?</h2>
+          <h2 className="text-3xl font-black mb-16 text-primary dark:text-blue-400 font-heading tracking-tighter">🌟 Why Choose Us?</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             {[
               { icon: "🎓", text: "Govt Teaching Experience" },
@@ -87,10 +87,10 @@ export default function Home() {
       </section>
 
       {/* 8. Blog Preview */}
-      <section id="blog" className="section-padding bg-white">
+      <section id="blog" className="section-padding bg-white dark:bg-[#0F172A] transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-end mb-16">
-            <h2 className="text-4xl font-bold">Latest Articles & Exam Guidance</h2>
+            <h2 className="text-4xl font-black text-slate-800 dark:text-slate-100 tracking-tighter">Latest Guidance</h2>
             <button className="hidden md:block text-primary font-bold hover:text-accent transition-all border-b-2 border-primary">View All Articles</button>
           </div>
           <div className="grid md:grid-cols-3 gap-10">
@@ -115,12 +115,12 @@ export default function Home() {
       </section>
 
       {/* 9. CSC Services Highlight */}
-      <section id="csc" className="section-padding bg-white border-t border-slate-50">
+      <section id="csc" className="section-padding bg-white dark:bg-[#0F172A] border-t border-slate-50 dark:border-slate-800/50 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-8">
-              <h2 className="text-4xl font-bold text-primary">Serving the Community Through CSC</h2>
-              <p className="text-lg text-slate-500 leading-relaxed">
+              <h2 className="text-4xl font-black text-primary dark:text-blue-400 tracking-tighter">Serving the Community</h2>
+              <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                 Our Common Service Center in Hanjiwera provides a wide range of government-to-citizen services under the Digital India mission.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -147,20 +147,20 @@ export default function Home() {
       </section>
 
       {/* 10. Contact CTA Section */}
-      <section id="contact" className="py-24 bg-primary text-white text-center">
+      <section id="contact-cta" className="py-24 bg-primary text-white text-center dark:bg-slate-900/50">
         <div className="container mx-auto px-6 max-w-4xl space-y-10">
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight">Need Study Help or CSC Assistance?</h2>
-          <p className="text-blue-200 text-xl font-medium">We are here to support your education and government service needs.</p>
+          <h2 className="text-4xl md:text-5xl font-black leading-tight tracking-tighter">Need Study Help or CSC Assistance?</h2>
+          <p className="text-blue-100 dark:text-slate-400 text-xl font-medium">We are here to support your education and government service needs.</p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="tel:+919999999999" className="bg-white text-primary px-10 py-5 rounded-full font-bold flex items-center justify-center hover:bg-secondary transition-all">
-              📞 Call Now
-            </a>
-            <a href="https://wa.me/your-number" className="bg-[#25D366] text-white px-10 py-5 rounded-full font-bold flex items-center justify-center hover:scale-105 transition-all">
+            <Link href="/contact" className="bg-white text-primary px-10 py-5 rounded-full font-black flex items-center justify-center hover:bg-secondary transition-all shadow-xl">
+              📩 Message Me
+            </Link>
+            <a href="https://wa.me/917006851315" target="_blank" className="bg-[#25D366] text-white px-10 py-5 rounded-full font-black flex items-center justify-center hover:scale-105 transition-all shadow-xl">
               💬 WhatsApp
             </a>
-            <a href="#map" className="bg-transparent border-2 border-white/20 px-10 py-5 rounded-full font-bold flex items-center justify-center hover:bg-white/10 transition-all">
+            <Link href="/contact#map" className="bg-transparent border-2 border-white/20 px-10 py-5 rounded-full font-black flex items-center justify-center hover:bg-white/10 transition-all">
               📍 Visit Center
-            </a>
+            </Link>
           </div>
         </div>
       </section>

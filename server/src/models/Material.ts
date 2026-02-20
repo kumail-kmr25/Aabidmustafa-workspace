@@ -19,7 +19,7 @@ const MaterialSchema: Schema = new Schema({
     chapter: { type: String, required: true },
     fileUrl: { type: String, required: true },
     description: { type: String },
-    downloadCount: { type: Number, default: 0 },
+    downloads: { type: Number, default: 0 },
 }, { timestamps: true });
 
 export default mongoose.model<IMaterial>('Material', MaterialSchema);

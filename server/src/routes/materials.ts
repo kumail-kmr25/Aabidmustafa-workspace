@@ -66,7 +66,7 @@ router.post('/download/:id', protect, async (req: any, res: Response) => {
     try {
         const material = await Material.findById(req.params.id);
         if (material) {
-            material.downloadCount += 1;
+            material.downloads += 1;
             await material.save();
 
             // Update user count

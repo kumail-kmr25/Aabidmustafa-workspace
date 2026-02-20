@@ -6,6 +6,8 @@ import { connectDB } from './config/db';
 import authRoutes from './routes/auth';
 import materialRoutes from './routes/materials';
 import testRoutes from './routes/tests';
+import blogRoutes from './routes/blogs';
+import serviceRoutes from './routes/services';
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/materials', materialRoutes);
 app.use('/api/tests', testRoutes);
+app.use('/api/blogs', blogRoutes);
+app.use('/api/services', serviceRoutes);
 
 // Database connection
 connectDB();

@@ -14,7 +14,8 @@ import {
     Menu,
     X,
     LogOut,
-    LayoutDashboard
+    LayoutDashboard,
+    ShieldAlert
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -34,7 +35,7 @@ export default function MainSidebar() {
         { label: "Test Series", icon: <FileText size={20} />, href: "/dashboard/tests" },
         { label: "CSC Services", icon: <Briefcase size={20} />, href: "/#csc" },
         { label: "Latest News", icon: <MessageSquare size={20} />, href: "/#blog" },
-        { label: "Contact", icon: <PhoneCall size={20} />, href: "/#contact" },
+        { label: "Contact", icon: <PhoneCall size={20} />, href: "/contact" },
     ];
 
     return (
@@ -99,6 +100,21 @@ export default function MainSidebar() {
                             </Link>
                         );
                     })}
+
+                    {/* Admin Specific Gateway */}
+                    {user?.role === 'admin' && (
+                        <Link
+                            href="/admin"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center justify-between p-4 rounded-2xl text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-all duration-300 group mt-8 border border-dashed border-amber-200 dark:border-amber-800/50"
+                        >
+                            <div className="flex items-center gap-4">
+                                <ShieldAlert size={20} className="group-hover:rotate-12 transition-transform" />
+                                <span className="font-black text-xs uppercase tracking-widest">Admin Workspace</span>
+                            </div>
+                            <ChevronRight size={16} />
+                        </Link>
+                    )}
                 </nav>
 
                 {/* User Card / Auth Section */}

@@ -1,90 +1,51 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ShieldAlert, ArrowLeft, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
 
-export default function RegisterPage() {
-    const { register: signup } = useAuth();
-    const [error, setError] = useState('');
-    const { register, handleSubmit, formState: { errors } } = useForm();
-
-    const onSubmit = async (data: any) => {
-        try {
-            setError('');
-            await signup(data.name, data.email, data.password, data.studentClass);
-        } catch (err: any) {
-            setError(err.response?.data?.message || 'Registration failed');
-        }
-    };
-
+export default function RegisterRestrictedPage() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-secondary px-6">
-            <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md space-y-8">
-                <div className="text-center">
-                    <h1 className="text-3xl font-bold text-primary font-heading">Create Account</h1>
-                    <p className="text-slate-500 mt-2 text-sm">Join the JKBOSE digital learning platform</p>
+        <div className="min-h-screen flex items-center justify-center bg-[#F5F7FA] dark:bg-[#0F172A] px-6">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white dark:bg-slate-800 p-10 rounded-[40px] shadow-2xl w-full max-w-lg text-center space-y-8 border border-slate-100 dark:border-slate-700"
+            >
+                <div className="w-20 h-20 bg-amber-50 dark:bg-amber-900/30 text-amber-500 rounded-3xl flex items-center justify-center mx-auto rotate-12">
+                    <ShieldAlert size={40} />
                 </div>
 
-                {error && <div className="bg-red-50 text-red-500 p-3 rounded-lg text-sm text-center">{error}</div>}
+                <div className="space-y-4">
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white font-heading tracking-tight">Registration Restricted</h1>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium">
+                        Public registration is currently disabled to maintain platform integrity.
+                        Accounts are strictly managed by the platform administrator.
+                    </p>
+                </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    <div className="space-y-1">
-                        <label className="text-xs font-semibold text-slate-700">Full Name</label>
-                        <input
-                            {...register('name', { required: 'Name is required' })}
-                            className="w-full p-3 bg-soft-gray border border-slate-100 rounded-lg focus:outline-primary"
-                            placeholder="John Doe"
-                        />
-                    </div>
+                <div className="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border-l-4 border-amber-500 text-left">
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">How to join?</p>
+                    <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                        Please contact <span className="text-primary dark:text-blue-400">Mustafa Aabid</span> directly or your school coordinator to get your login credentials.
+                    </p>
+                </div>
 
-                    <div className="space-y-1">
-                        <label className="text-xs font-semibold text-slate-700">Email Address</label>
-                        <input
-                            {...register('email', { required: 'Email is required' })}
-                            type="email"
-                            className="w-full p-3 bg-soft-gray border border-slate-100 rounded-lg focus:outline-primary"
-                            placeholder="student@example.com"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4">
-                        <div className="space-y-1">
-                            <label className="text-xs font-semibold text-slate-700">Your Class</label>
-                            <select
-                                {...register('studentClass', { required: 'Class is required' })}
-                                className="w-full p-3 bg-soft-gray border border-slate-100 rounded-lg focus:outline-primary"
-                            >
-                                <option value="">Select Class</option>
-                                <option value="6">Class 6</option>
-                                <option value="7">Class 7</option>
-                                <option value="8">Class 8</option>
-                                <option value="9">Class 9</option>
-                                <option value="10">Class 10</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="space-y-1">
-                        <label className="text-xs font-semibold text-slate-700">Password</label>
-                        <input
-                            {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Minimum 6 characters' } })}
-                            type="password"
-                            className="w-full p-3 bg-soft-gray border border-slate-100 rounded-lg focus:outline-primary"
-                            placeholder="••••••••"
-                        />
-                    </div>
-
-                    <button className="w-full bg-primary text-white p-4 rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg mt-6">
-                        Register Now
-                    </button>
-                </form>
-
-                <p className="text-center text-slate-500 text-sm">
-                    Already have an account? <Link href="/auth/login" className="text-primary font-bold hover:underline">Login here</Link>
-                </p>
-            </div>
+                <div className="flex flex-col gap-4">
+                    <Link
+                        href="/contact"
+                        className="w-full bg-primary text-white py-5 rounded-2xl font-black shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all flex items-center justify-center gap-3"
+                    >
+                        <MessageSquare size={20} /> Contact for Access
+                    </Link>
+                    <Link
+                        href="/auth/login"
+                        className="w-full text-slate-400 hover:text-primary dark:hover:text-blue-400 font-bold flex items-center justify-center gap-2 transition-colors"
+                    >
+                        <ArrowLeft size={16} /> Back to Sign In
+                    </Link>
+                </div>
+            </motion.div>
         </div>
     );
 }
