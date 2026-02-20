@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Montserrat, Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +9,7 @@ import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "900"], variable: "--font-poppins" });
 
 export const metadata: Metadata = {
   title: "Mustafa Aabid | Govt Teacher & JKBOSE Mentor",
@@ -24,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${montserrat.variable} antialiased`}>
+      <body className={`${inter.variable} ${montserrat.variable} ${poppins.variable} antialiased font-body`}>
         <AuthProvider>
           <AnnouncementPopup />
           <AnnouncementBar />
