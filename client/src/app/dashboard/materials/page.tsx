@@ -1,20 +1,49 @@
 'use client';
 
-import { useState } from 'react';
-import { Search, Filter, Download, BookOpen } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { Search, Filter, Download, BookOpen, Clock, FileText } from "lucide-react";
+import axios from 'axios';
 
 export default function MaterialsPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedSubject, setSelectedSubject] = useState('');
+    const [materials, setMaterials] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    // Dummy data
-    const materials = [
-        { id: 1, title: "Quadratic Equations Notes", class: "10", subject: "Math", chapter: "Chapter 4", date: "2026-02-15" },
-        { id: 2, title: "Periodic Classification of Elements", class: "10", subject: "Science", date: "2026-02-14" },
-        { id: 3, title: "The Rise of Nationalism in Europe", class: "10", subject: "History", date: "2026-02-12" },
-        { id: 4, title: "Number Systems", class: "9", subject: "Math", date: "2026-02-10" },
-    ];
+    useEffect(() => {
+        const fetchMaterials = async () => {
+            try {
+                const { data } = await axios.get('http://localhost:5000/api/materials', {
+                    params: { class: selectedClass, subject: selectedSubject }
+                });
+                setMaterials(data);
+            } catch (error) {
+                console.error("Error fetching materials:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchMaterials();
+    }, [selectedClass, selectedSubject]);
+
+    const handleDownload = async (id: string, title: string) => {
+        try {
+            const response = await axios.get(`http://localhost:5000/api/materials/download/${id}`, {
+                responseType: 'blob',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${title}_MustafaAabid.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            alert("Download failed. Please ensure you are logged in.");
+        }
+    };
 
     const filteredMaterials = materials.filter(m => {
         return (
@@ -69,20 +98,23 @@ export default function MaterialsPage() {
 
             {/* Results Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredMaterials.map((item) => (
-                    <div key={item.id} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 card-hover flex justify-between items-start">
+                {materials.filter(m => m.title.toLowerCase().includes(searchTerm.toLowerCase())).map((item) => (
+                    <div key={item._id} className="bg-white dark:bg-slate-800 p-8 rounded-[32px] shadow-sm border border-slate-100 dark:border-slate-700 card-hover flex justify-between items-start transition-colors duration-300">
                         <div className="space-y-4">
                             <div className="flex items-center space-x-2">
-                                <span className="bg-blue-50 text-primary text-[10px] font-black px-2 py-1 rounded uppercase">Class {item.class}</span>
-                                <span className="bg-orange-50 text-orange-600 text-[10px] font-black px-2 py-1 rounded uppercase">{item.subject}</span>
+                                <span className="bg-blue-50 dark:bg-blue-900/30 text-primary dark:text-blue-400 text-[10px] font-black px-2 py-1 rounded uppercase tracking-wider transition-colors">Class {item.class}</span>
+                                <span className="bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-[10px] font-black px-2 py-1 rounded uppercase tracking-wider transition-colors">{item.subject}</span>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-800 line-clamp-1">{item.title}</h3>
-                            <div className="flex items-center text-slate-400 text-xs space-x-4">
-                                <span className="flex items-center gap-1"><BookOpen size={14} /> {item.chapter || 'All Chapters'}</span>
-                                <span>📅 {item.date}</span>
+                            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 line-clamp-1 font-heading">{item.title}</h3>
+                            <div className="flex items-center text-slate-400 dark:text-slate-500 text-xs space-x-4 font-medium">
+                                <span className="flex items-center gap-1.5"><FileText size={14} /> {item.chapter || 'All Chapters'}</span>
+                                <span className="flex items-center gap-1.5"><Clock size={14} /> {new Date(item.uploadedAt).toLocaleDateString()}</span>
                             </div>
                         </div>
-                        <button className="bg-primary/5 text-primary p-4 rounded-xl hover:bg-primary hover:text-white transition-all">
+                        <button
+                            onClick={() => handleDownload(item._id, item.title)}
+                            className="bg-primary/5 dark:bg-primary/20 text-primary dark:text-blue-400 p-4 rounded-2xl hover:bg-primary hover:text-white dark:hover:bg-blue-500 transition-all active:scale-90"
+                        >
                             <Download size={24} />
                         </button>
                     </div>

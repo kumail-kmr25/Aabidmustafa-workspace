@@ -37,10 +37,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
     return (
-        <div className="min-h-screen bg-[#F5F7FA] flex font-body">
+        <div className="min-h-screen bg-[#F5F7FA] dark:bg-[#0F172A] flex font-body transition-colors duration-300">
             {/* Sidebar */}
             <aside className={`
-        fixed inset-y-0 left-0 z-50 w-[250px] bg-[#0A2E5C] text-white flex flex-col transition-transform duration-300 ease-in-out
+        fixed inset-y-0 left-0 z-50 w-[250px] bg-[#0A2E5C] dark:bg-[#09152b] text-white flex flex-col transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
                 <div className="p-6 border-b border-white/5 flex items-center space-x-3 bg-[#082245]">

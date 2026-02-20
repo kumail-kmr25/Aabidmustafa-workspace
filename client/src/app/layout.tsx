@@ -18,21 +18,26 @@ export const metadata: Metadata = {
 
 import AnnouncementPopup from "@/components/AnnouncementPopup";
 
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { NotificationProvider } from "@/context/NotificationContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${montserrat.variable} ${poppins.variable} antialiased font-body`}>
-        <AuthProvider>
-          <AnnouncementPopup />
-          <AnnouncementBar />
-          <Navbar />
-          {children}
-          <Footer />
-        </AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthProvider>
+            <NotificationProvider>
+              <AnnouncementPopup />
+              <AnnouncementBar />
+              {children}
+            </NotificationProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

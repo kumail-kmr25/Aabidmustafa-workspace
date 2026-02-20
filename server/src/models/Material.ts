@@ -7,7 +7,8 @@ export interface IMaterial extends Document {
     chapter: string;
     fileUrl: string;
     description?: string;
-    downloadCount: number;
+    downloads: number;
+    uploadedAt: Date;
     createdAt: Date;
 }
 
