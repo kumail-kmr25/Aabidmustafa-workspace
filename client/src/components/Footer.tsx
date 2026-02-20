@@ -35,8 +35,9 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="border-t border-slate-100 pt-8 text-center text-slate-400 text-xs">
+                <div className="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-xs">
                     <p>&copy; {new Date().getFullYear()} Mustafa Aabid | All Rights Reserved</p>
+                    <p className="font-medium">Built with ❤️ by <span className="text-primary dark:text-blue-400 font-black">Kumail Kmr</span></p>
                 </div>
             </div>
         </footer>
