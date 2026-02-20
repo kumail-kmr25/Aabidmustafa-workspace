@@ -1,93 +1,49 @@
 import Link from "next/link";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import AboutMeSection from "@/components/AboutMeSection";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col overflow-x-hidden">
+    <main className="flex min-h-screen flex-col overflow-x-hidden pt-20 lg:pt-0">
       <FloatingWhatsApp />
 
-      {/* 3. Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-white to-secondary flex items-center min-h-[85vh]">
-        <div className="container mx-auto px-6">
+      {/* 3. Hero Section - Refined for Side Navigation */}
+      <section className="py-24 lg:py-32 bg-gradient-to-br from-white to-secondary dark:from-[#0F172A] dark:to-[#1E293B] flex items-center min-h-[85vh] transition-colors duration-300">
+        <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8 text-center lg:text-left">
-              <h1 className="text-4xl md:text-6xl font-black text-primary leading-[1.1]">
-                Empowering Students.<br />
-                <span className="text-accent underline decoration-secondary decoration-8 underline-offset-4">Serving the Community.</span>
+            <div className="space-y-10 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 bg-primary/5 dark:bg-primary/20 px-4 py-2 rounded-full">
+                <span className="w-2 h-2 bg-primary rounded-full animate-ping" />
+                <span className="text-[10px] font-black text-primary dark:text-blue-400 uppercase tracking-widest">Enrollment Open 2026</span>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-slate-100 leading-[1] font-heading tracking-tighter">
+                Empowering <span className="text-primary dark:text-blue-400">Gen Z.</span><br />
+                <span className="text-slate-400">Serving the People.</span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-600 max-w-xl mx-auto lg:mx-0">
-                Govt Teacher in J&K helping Class 6–10 students under JKBOSE. Providing professional mentorship and accessible learning resources.
+              <p className="text-xl md:text-2xl text-slate-500 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                Professional JKBOSE Mentorship for Classes 6–10 and Trusted CSC Services in Hanjiwera.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="#study-hub" className="bg-primary text-white px-8 py-4 rounded-md font-bold hover:bg-slate-800 transition-all shadow-lg flex items-center justify-center">
-                  🔵 Explore Study Material
+              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start pt-4">
+                <Link href="/dashboard/materials" className="bg-primary text-secondary px-10 py-5 rounded-[24px] font-black hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 flex items-center justify-center gap-3">
+                  Explore Resources <span className="text-xl">→</span>
                 </Link>
-                <Link href="#csc" className="bg-white border-2 border-primary text-primary px-8 py-4 rounded-md font-bold hover:bg-secondary transition-all flex items-center justify-center">
-                  ⚪ CSC Services
+                <Link href="#csc" className="bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-800 dark:text-slate-100 px-10 py-5 rounded-[24px] font-black hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center">
+                  CSC Services
                 </Link>
               </div>
             </div>
-            <div className="hidden lg:flex justify-center items-center">
-              <div className="relative w-[500px] h-[500px] bg-secondary rounded-full flex items-center justify-center shadow-inner">
-                <span className="text-[250px] drop-shadow-2xl">👨🏫</span>
+            <div className="hidden lg:flex justify-end items-center relative">
+              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]" />
+              <div className="relative z-10 w-[450px] h-[450px] bg-slate-50 dark:bg-slate-800 rounded-[80px] flex items-center justify-center shadow-2xl rotate-3 border-4 border-white dark:border-slate-700 overflow-hidden">
+                <span className="text-[200px] drop-shadow-2xl">🎓</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Quick Access Cards */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 -mt-16 lg:-mt-32">
-            {[
-              { icon: "📚", title: "Study Notes", desc: "Comprehensive chapter-wise notes for JKBOSE." },
-              { icon: "📝", title: "PYQs", desc: "Previous year question papers with solutions." },
-              { icon: "🎥", title: "Quick Lectures", desc: "Short video summaries of complex topics." },
-              { icon: "🏢", title: "CSC Services", desc: "Trusted online government services in Hanjiwera." }
-            ].map((item, i) => (
-              <div key={i} className="bg-white p-8 rounded-xl shadow-lg border border-slate-50 card-hover flex flex-col items-center text-center">
-                <span className="text-5xl mb-6">{item.icon}</span>
-                <h4 className="text-xl font-bold mb-3">{item.title}</h4>
-                <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. About Section */}
-      <section id="about" className="section-padding bg-soft-gray">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <div className="bg-white p-4 rounded-2xl shadow-xl overflow-hidden aspect-[4/5] flex items-center justify-center bg-secondary">
-              <span className="text-[200px]">📷</span>
-            </div>
-            <div className="space-y-8">
-              <h2 className="text-4xl font-bold text-primary">Mustafa Aabid</h2>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                A dedicated Government Teacher in Jammu & Kashmir, committed to bridging the gap in quality education for students in rural areas.
-              </p>
-              <div className="grid gap-4">
-                {[
-                  "Govt Teacher in J&K Education Dept",
-                  "Specialized in JKBOSE Curriculum",
-                  "Committed to Community Welfare in Hanjiwera",
-                  "Expert Personalized Student Guidance"
-                ].map((point, i) => (
-                  <div key={i} className="flex items-center space-x-3">
-                    <span className="text-green-500 font-bold">✔</span>
-                    <span className="font-semibold text-slate-700">{point}</span>
-                  </div>
-                ))}
-              </div>
-              <button className="bg-primary text-white px-10 py-4 rounded-md font-bold hover:bg-slate-800 transition-colors shadow-md">
-                Read More About Me
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Legacy About replaced with Brand New Rich Profile */}
+      <AboutMeSection />
 
       {/* 6. Study Hub Preview */}
       <section id="study-hub" className="section-padding bg-white">

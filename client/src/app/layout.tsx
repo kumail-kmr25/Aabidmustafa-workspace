@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnnouncementBar from "@/components/AnnouncementBar";
 
@@ -17,6 +16,7 @@ export const metadata: Metadata = {
 };
 
 import AnnouncementPopup from "@/components/AnnouncementPopup";
+import MainSidebar from "@/components/MainSidebar";
 
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { NotificationProvider } from "@/context/NotificationContext";
@@ -34,7 +34,12 @@ export default function RootLayout({
             <NotificationProvider>
               <AnnouncementPopup />
               <AnnouncementBar />
-              {children}
+              <div className="flex min-h-screen">
+                <MainSidebar />
+                <main className="flex-1 w-full relative">
+                  {children}
+                </main>
+              </div>
             </NotificationProvider>
           </AuthProvider>
         </ThemeProvider>
