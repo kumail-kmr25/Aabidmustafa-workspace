@@ -4,7 +4,17 @@ import { generateToken } from '../utils/generateToken';
 
 import { protect, adminOnly } from '../middleware/auth';
 
+import bcrypt from 'bcrypt';
+import rateLimit from 'express-rate-limit';
+
 const router = express.Router();
+
+// Rate limiter for login attempts
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // Limit each IP to 10 login requests per window
+    message: { message: 'Too many login attempts, please try again after 15 minutes' }
+});
 
 // @desc    Register a new student (Admin Only)
 // @route   POST /api/auth/register
@@ -22,7 +32,7 @@ router.post('/register', protect, adminOnly, async (req: Request, res: Response)
             email,
             password,
             class: studentClass,
-            role: 'student'
+            role: 'student' // Force role to student
         });
 
         if (user) {
@@ -40,11 +50,16 @@ router.post('/register', protect, adminOnly, async (req: Request, res: Response)
     }
 });
 
-// @desc    Login student/admin
+// @desc    Login student
 // @route   POST /api/auth/login
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/login', loginLimiter, async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
+
+        // Block admin email from public login if it's the hardcoded one
+        if (email === process.env.ADMIN_EMAIL) {
+            return res.status(401).json({ message: 'Please use the secure admin portal' });
+        }
 
         const user: any = await User.findOne({ email });
 
@@ -60,6 +75,39 @@ router.post('/login', async (req: Request, res: Response) => {
         } else {
             res.status(401).json({ message: 'Invalid email or password' });
         }
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// @desc    Secure Admin Login (Hardcoded ENV)
+// @route   POST /api/auth/admin-login
+router.post('/admin-login', loginLimiter, async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body;
+
+        if (email !== process.env.ADMIN_EMAIL) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const isMatch = await bcrypt.compare(
+            password,
+            process.env.ADMIN_PASSWORD_HASH || ''
+        );
+
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // Generate token with role but NO id (since it's hardcoded)
+        const token = generateToken('', 'admin');
+
+        res.json({
+            name: 'Mustafa Admin',
+            email: process.env.ADMIN_EMAIL,
+            role: 'admin',
+            token
+        });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }
